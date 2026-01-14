@@ -1,0 +1,66 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Neon glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Gradient for depth -->
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle (optional) -->
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#1f2937" stroke-width="2" opacity="0.3"/>
+  
+  <!-- V shape - left stroke -->
+  <path d="M 50 50 L 100 130" 
+        stroke="url(#gradient)" 
+        stroke-width="12" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        fill="none"
+        filter="url(#glow)"/>
+  
+  <!-- V shape - right stroke -->
+  <path d="M 100 130 L 150 50" 
+        stroke="url(#gradient)" 
+        stroke-width="12" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        fill="none"
+        filter="url(#glow)"/>
+  
+  <!-- P shape - vertical stroke -->
+  <path d="M 60 60 L 60 140" 
+        stroke="url(#gradient)" 
+        stroke-width="10" 
+        stroke-linecap="round"
+        fill="none"
+        filter="url(#glow)"
+        opacity="0.7"/>
+  
+  <!-- P shape - top curve -->
+  <path d="M 60 60 Q 90 50 100 65 Q 110 80 100 95 Q 90 105 60 95" 
+        stroke="url(#gradient)" 
+        stroke-width="10" 
+        stroke-linecap="round"
+        fill="none"
+        filter="url(#glow)"
+        opacity="0.7"/>
+  
+  <!-- Accent dots for tech feel -->
+  <circle cx="100" cy="135" r="4" fill="#22d3ee" filter="url(#glow)"/>
+  <circle cx="45" cy="45" r="3" fill="#22d3ee" opacity="0.6"/>
+  <circle cx="155" cy="45" r="3" fill="#22d3ee" opacity="0.6"/>
+  
+  <!-- Geometric accent lines -->
+  <line x1="40" y1="150" x2="70" y2="150" stroke="#22d3ee" stroke-width="2" opacity="0.3"/>
+  <line x1="130" y1="150" x2="160" y2="150" stroke="#22d3ee" stroke-width="2" opacity="0.3"/>
+</svg>

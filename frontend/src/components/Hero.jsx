@@ -20,7 +20,7 @@ export default function Hero() {
           multi-step problems in dynamic environments.
         </p>
         </div>
-        <div className="flex gap-4 flex-wrap">
+        <div className="flex gap-4 flex-wrap justify-center">
           <a
             href="https://github.com/Vedant-Git-dev"
             target="_blank"
@@ -41,7 +41,7 @@ export default function Hero() {
             <span>Connect</span>
           </a>
           <button
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/resume.pdf', '_blank')}
             className="px-6 py-3 bg-transparent border-2 border-gray-600 text-gray-300 rounded hover:border-cyan-400 hover:text-cyan-400 transition-all duration-300 flex items-center gap-2 cursor-pointer"
           >
             <Download size={20} />

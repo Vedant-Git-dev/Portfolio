@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -14,21 +15,33 @@ export default function Navbar() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+    setMobileMenuOpen(false);
   };
 
   return (
-    <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+    <nav className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
       scrolled ? 'bg-gray-900/95 backdrop-blur-sm border-b border-gray-800' : 'bg-transparent'
     }`}>
-      <div className="max-w-6xl mx-auto px-6 py-4">
-        <div className="flex justify-between items-center">
-          <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="text-xl font-bold text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer"
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
+        <div className="flex justify-center  items-center">
+          
+          
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden text-gray-300 hover:text-cyan-400 z-50"
           >
-            VP
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
           </button>
-          <div className="flex gap-8">
+
+          {/* Desktop menu */}
+          <div className="hidden md:flex gap-6 lg:gap-8">
             {['About', 'Work', 'Skills', 'Contact'].map((item) => (
               <button
                 key={item}
@@ -41,6 +54,21 @@ export default function Navbar() {
             ))}
           </div>
         </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden mt-4 pb-4 flex flex-col gap-4">
+            {['About', 'Work', 'Skills', 'Contact'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item.toLowerCase())}
+                className="text-gray-300 hover:text-cyan-400 transition-colors text-left text-sm font-medium cursor-pointer"
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </nav>
   );
