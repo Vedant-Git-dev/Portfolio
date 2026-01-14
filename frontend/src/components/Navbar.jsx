@@ -23,7 +23,7 @@ export default function Navbar() {
       scrolled ? 'bg-gray-900/95 backdrop-blur-sm border-b border-gray-800' : 'bg-transparent'
     }`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
-        <div className="flex justify-center  items-center">
+        <div className="flex items-center justify-between md:justify-center">
           
           
           {/* Mobile menu button */}
@@ -62,7 +62,7 @@ export default function Navbar() {
               <button
                 key={item}
                 onClick={() => scrollToSection(item.toLowerCase())}
-                className="text-gray-300 hover:text-cyan-400 transition-colors text-left text-sm font-medium cursor-pointer"
+                className="w-full justify-center text-gray-300 hover:text-cyan-400 transition-colors text-center text-sm font-medium cursor-pointer"
               >
                 {item}
               </button>
