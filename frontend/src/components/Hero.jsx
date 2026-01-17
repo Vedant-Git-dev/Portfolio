@@ -1,52 +1,57 @@
-import { Github, Linkedin, Download, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 pt-20">
-      <div className="max-w-4xl">
-        <div className="mb-6">
-          <span className="text-cyan-400 text-sm font-mono">$ whoami</span>
+    <section id="home" className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
+      {/* Animated background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-cyan-950/20 via-transparent to-transparent"></div>
+      
+      <div className="max-w-4xl mx-auto text-center relative z-10">
+        {/* Status badge */}
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-400/10 border border-cyan-400/20 rounded-full mb-8">
+          <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+          <span className="text-cyan-400 text-sm font-medium">OPEN TO WORK</span>
         </div>
+
         <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
           <span className="text-white">Vedant Pardeshi</span>
         </h1>
-        <h2 className="text-2xl md:text-3xl text-gray-400 mb-8 font-light">
-          AI/ML Engineer <span className="text-cyan-400">|</span> LLM Agent Systems <span className="text-cyan-400">&</span> Autonomous Planning
+        
+        <h2 className="text-2xl md:text-4xl mb-6 font-light">
+          <span className="text-gray-400">AI/ML Engineer </span>
+          <span className="text-cyan-400">&</span>
+          <span className="text-gray-400"> Machine Learning Engineer</span>
         </h2>
-        <div align = "center">
-        <p className="text-lg text-gray-300 mb-12 max-w-2xl leading-relaxed">
-          I design intelligent systems that don't just process, they reason, plan, and adapt. 
-          Focused on pushing LLMs beyond chat into autonomous agents that solve complex, 
-          multi-step problems in dynamic environments.
+        
+        <p className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+        Engineering intelligent systems using NLP, LLM-based agents, and data-driven prediction.
         </p>
-        </div>
-        <div className="flex gap-4 flex-wrap justify-center">
+
+
+        {/* Social Links */}
+        <div className="flex gap-4 justify-center">
           <a
             href="https://github.com/Vedant-Git-dev"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-transparent border-2 border-cyan-400 text-cyan-400 rounded hover:bg-cyan-400/10 transition-all duration-300 flex items-center gap-2 group cursor-pointer"
+            className="w-12 h-12 bg-gray-800/50 border border-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-700 hover:border-cyan-400 transition-all group"
           >
-            <Github size={20} />
-            <span>GitHub</span>
-            <ExternalLink size={16} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+            <Github className="w-5 h-5 text-gray-400 group-hover:text-cyan-400 transition-colors" />
           </a>
           <a
             href="https://www.linkedin.com/in/vedant-pardeshi"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-cyan-400 text-gray-900 rounded hover:bg-cyan-300 transition-all duration-300 flex items-center gap-2 font-medium cursor-pointer"
+            className="w-12 h-12 bg-gray-800/50 border border-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-700 hover:border-cyan-400 transition-all group"
           >
-            <Linkedin size={20} />
-            <span>Connect</span>
+            <Linkedin className="w-5 h-5 text-gray-400 group-hover:text-cyan-400 transition-colors" />
           </a>
-          <button
-            onClick={() => window.open('/resume.pdf', '_blank')}
-            className="px-6 py-3 bg-transparent border-2 border-gray-600 text-gray-300 rounded hover:border-cyan-400 hover:text-cyan-400 transition-all duration-300 flex items-center gap-2 cursor-pointer"
+          <a
+            href="mailto:vedantpardeshi26@gmail.com"
+            className="w-12 h-12 bg-gray-800/50 border border-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-700 hover:border-cyan-400 transition-all group"
           >
-            <Download size={20} />
-            <span>Resume</span>
-          </button>
+            <Mail className="w-5 h-5 text-gray-400 group-hover:text-cyan-400 transition-colors" />
+          </a>
         </div>
       </div>
     </section>
