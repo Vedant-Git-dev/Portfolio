@@ -82,7 +82,9 @@ export default function Projects() {
 
         {/* View More Button */}
         <div className="text-center">
-          <button className="px-8 py-4 bg-white text-gray-900 rounded-lg hover:bg-gray-100 transition-all text-sm font-medium inline-flex items-center gap-2 group">
+          <button 
+            onClick={() => window.open('https://github.com/Vedant-Git-dev', '_blank')}
+            className="px-8 py-4 bg-white text-gray-900 rounded-lg hover:bg-gray-100 transition-all text-sm font-medium inline-flex items-center gap-2 group">
             Explore GitHub
             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
