@@ -74,11 +74,11 @@ export default function Projects() {
     >
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
-        <div className="mb-16">
-          <div className="flex items-center gap-3 mb-4">
+        <div className="mb-16 text-center">
+          <div className="inline-flex items-center gap-3 mb-4">
             <div className="h-px w-12 bg-cyan-400"></div>
             <span className="text-cyan-400 text-sm font-mono tracking-widest">SYSTEM LOGS / PROJECTS</span>
-            <div className="h-px flex-1 bg-gray-800"></div>
+            <div className="h-px w-12 bg-cyan-400"></div>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold">
             <span className="text-white">Architecting </span>
