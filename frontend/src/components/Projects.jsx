@@ -32,6 +32,7 @@ export default function Projects() {
     {
       title: "PhiCraft",
       role: "Autonomous Agent Architecture",
+      category: "Agent Systems",
       image : "https://plus.unsplash.com/premium_photo-1683120963435-6f9355d4a776?q=80&w=663&auto=format&fit=crop",
       github: "https://github.com/Vedant-Git-dev/PhiCraft",
       shortDescription: "An LLM-powered autonomous Minecraft agent capable of multi-step planning and execution with dynamic error recovery.",
@@ -61,7 +62,25 @@ export default function Projects() {
       ],
       status: "COMPLETED",
       tech: ["Python", "LightGBM", "LambdaRank", "scikit-learn", "RAG Pipelines"]
+    },
+    {
+      title: "RadiantAI",
+      role: "Clinical Decision AI System",
+      category: "Applied AI Systems",
+      image: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?q=80&w=687&auto=format&fit=crop",
+      github: "https://github.com/Vedant-Git-dev/RadiantAI",
+      shortDescription: "An MCP-driven clinical AI assistant for chest X-ray screening that adapts decisions based on model confidence and uncertainty.",
+      fullDescription: "Built an adaptive clinical screening system that augments chest X-ray interpretation using a Model Context Protocol architecture. Instead of returning static predictions, the system evaluates model confidence, dynamically selects actions, and surfaces uncertainty explicitly. The pipeline processes medical images, performs EfficientNetB0 inference, and applies clinically calibrated thresholds to classify cases as normal, indeterminate, or high-risk. Intermediate cases trigger human-review pathways with Grad-CAM visualization, while high-confidence abnormal cases are escalated with structured clinical guidance. The core challenge was designing a system that behaves safely under uncertainty rather than maximizing raw accuracy, requiring precision–recall based threshold optimization and decision orchestration logic.",
+      metrics: [
+        "~0.78 AUC on unseen test data",
+        "~97% recall optimized for screening sensitivity",
+        "Confidence-aware decision routing",
+        "Explainability triggered only for uncertain predictions"
+      ],
+      status: "COMPLETED",
+      tech: ["Python", "TensorFlow", "OpenCV", "Grad-CAM", "Medical Imaging", "Decision Systems"]
     }
+
   ];
 
   return (
