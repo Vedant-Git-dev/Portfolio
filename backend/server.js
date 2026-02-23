@@ -17,16 +17,21 @@ app.post('/api/contact', async (req, res) => {
 
   try {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 587,          // 465 is blocked on Render free tier — use 587
+      secure: false,      // false = STARTTLS (upgrades after connect)
       auth: {
-        user: process.env.EMAIL_USER,   
-        pass: process.env.EMAIL_PASS,   
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+      tls: {
+        rejectUnauthorized: false,  // avoids cert issues on some hosts
       },
     });
 
     await transporter.sendMail({
       from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,  // sends to yourself
+      to: process.env.EMAIL_USER,
       replyTo: email,
       subject: `[Portfolio] ${subject}`,
       html: `
@@ -60,5 +65,5 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
