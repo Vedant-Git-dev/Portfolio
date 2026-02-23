@@ -4,7 +4,8 @@ import { Mail, Github, Linkedin } from 'lucide-react';
 export default function Contact() {
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
+  const [status, setStatus] = useState(null); // null | 'success' | 'error'
+  const [errorMsg, setErrorMsg] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -36,20 +37,34 @@ export default function Contact() {
     };
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate submission
-    setTimeout(() => {
+    setStatus(null);
+
+    try {
+      const res = await fetch('http://localhost:3001/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+        setErrorMsg(data.error || 'Something went wrong.');
+      }
+    } catch (err) {
+      setStatus('error');
+      setErrorMsg('Could not reach server. Make sure the backend is running.');
+    } finally {
       setIsSubmitting(false);
-      setShowMessage(true);
-      
-      // Hide message after 5 seconds
-      setTimeout(() => {
-        setShowMessage(false);
-      }, 5000);
-    }, 1000);
+      setTimeout(() => setStatus(null), 6000);
+    }
   };
 
   const handleChange = (e) => {
@@ -98,7 +113,7 @@ export default function Contact() {
                 <Mail className="w-6 h-6 text-cyan-400" />
               </div>
               <div className="min-w-0 flex-1">
-                <div className="text-sm text-gray-500 uppercase tracking-wide mb-1">Email Frequency</div>
+                <div className="text-sm text-gray-500 uppercase tracking-wide mb-1">Email</div>
                 <div className="text-white font-medium break-all">vedantpardeshi26@gmail.com</div>
               </div>
             </a>
@@ -164,6 +179,7 @@ export default function Contact() {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
+                      required
                       placeholder="John Doe"
                       className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition-all"
                     />
@@ -175,6 +191,7 @@ export default function Contact() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
+                      required
                       placeholder="john@example.com"
                       className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition-all"
                     />
@@ -188,6 +205,7 @@ export default function Contact() {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
+                    required
                     placeholder="Project Inquiry"
                     className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition-all"
                   />
@@ -199,24 +217,35 @@ export default function Contact() {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
+                    required
                     rows="4"
                     placeholder="How can I help you?"
                     className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition-all resize-none"
                   ></textarea>
                 </div>
 
+                {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full px-6 py-4 bg-white text-gray-900 rounded-lg hover:bg-gray-100 transition-all text-sm font-medium flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-6 py-4 bg-white text-gray-900 rounded-lg hover:bg-gray-100 transition-all text-sm font-medium flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed relative overflow-hidden"
                 >
                   {isSubmitting ? (
                     <>
-                      <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      {/* Scanning line animation */}
+                      <span className="absolute inset-0 overflow-hidden rounded-lg pointer-events-none">
+                        <span className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-[scan_1.2s_ease-in-out_infinite]" />
+                      </span>
+                      <svg className="animate-spin h-4 w-4 text-gray-500 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
-                      Transmitting...
+                      <span className="font-mono tracking-widest text-gray-600 text-xs">TRANSMITTING</span>
+                      <span className="flex gap-1 items-center">
+                        <span className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <span className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <span className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      </span>
                     </>
                   ) : (
                     <>
@@ -229,15 +258,30 @@ export default function Contact() {
                 </button>
 
                 {/* Success Message */}
-                {showMessage && (
-                  <div className="mt-4 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                {status === 'success' && (
+                  <div className="mt-4 p-4 bg-cyan-500/10 border border-cyan-400/30 rounded-lg">
                     <div className="flex items-start gap-3">
-                      <svg className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      <svg className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
                       <div>
-                        <h4 className="text-yellow-500 font-semibold mb-1">Build in Progress</h4>
-                        <p className="text-gray-400 text-sm">The contact form functionality is currently under development. Please reach out via direct channels above.</p>
+                        <h4 className="text-cyan-400 font-semibold mb-1">Transmission Successful</h4>
+                        <p className="text-gray-400 text-sm">Your message has been received. I'll get back to you soon!</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Error Message */}
+                {status === 'error' && (
+                  <div className="mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+                    <div className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      <div>
+                        <h4 className="text-red-400 font-semibold mb-1">Transmission Failed</h4>
+                        <p className="text-gray-400 text-sm">{errorMsg}</p>
                       </div>
                     </div>
                   </div>
