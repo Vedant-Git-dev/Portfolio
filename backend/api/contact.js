@@ -1,27 +1,27 @@
 const nodemailer = require('nodemailer');
 
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).end();
-
-  const { name, email, subject, message } = req.body;
-
-  if (!name || !email || !subject || !message) {
-    return res.status(400).json({ error: 'All fields are required.' });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
+    const { name, email, subject, message } = req.body;
+
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
     const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
+      service: 'gmail',
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
+        pass: process.env.EMAIL_PASS
+      }
     });
 
     await transporter.sendMail({
-      from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
+      from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
       replyTo: email,
       subject: `[Portfolio] ${subject}`,
@@ -48,12 +48,12 @@ export default async function handler(req, res) {
           <hr style="border-color: #1f2937; margin: 20px 0;" />
           <p style="color: #6b7280; font-size: 12px;">Reply directly to respond to ${name}.</p>
         </div>
-      `,
+      `
     });
 
-    res.json({ success: true });
-  } catch (err) {
-    console.error('Mail error:', err);
-    res.status(500).json({ error: 'Failed to send message.' });
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error('Mail error:', error);
+    res.status(500).json({ error: 'Failed to send email' });
   }
 }
